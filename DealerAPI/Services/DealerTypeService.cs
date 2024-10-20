@@ -14,6 +14,15 @@ public class DealerTypeService
         _dealerDb = dealerDb;
     }
 
+    public async Task<ServiceAnswer<List<DealerType>>> GetList()
+    {
+        return new ServiceAnswer<List<DealerType>>()
+        {
+            Ok = true,
+            Answer = _dealerDb.DealerTypes.ToList()
+        };
+    }
+
     public async Task<ServiceAnswer<DealerType>> Get(string dealerTypeId)
     {
         if (!Guid.TryParse(dealerTypeId, out var dealerTypeGuid))

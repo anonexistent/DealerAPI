@@ -25,6 +25,15 @@ public class DealerTypeController : ControllerBase
         return Ok(new OutputDealerType(types.Answer));
     }
 
+    [HttpGet("getList")]
+    public async Task<IActionResult> GetList()
+    {
+        var types = await _dealerTypeService.GetList();
+        if (!types.Ok || types.Answer is null) return BadRequest(types.Errors);
+
+        return Ok(new OutputDealerTypeList(types.Answer));
+    }
+
     [HttpPost("create")]
     public async Task<IActionResult> Create([FromBody] CreateDealerTypeBody b)
     {
