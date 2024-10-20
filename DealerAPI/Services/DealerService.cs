@@ -18,7 +18,7 @@ public class DealerService
 
     public async Task<ServiceAnswer<ICollection<Dealer>>> GetList()
     {
-        var result = await _dealerDb.Dealers.ToListAsync();
+        var result = await _dealerDb.Dealers.Include(x=>x.DealerType).ToListAsync();
 
         return new ServiceAnswer<ICollection<Dealer>>()
         {
