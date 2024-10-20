@@ -43,6 +43,15 @@ public class DealerController : ControllerBase
         return Ok(new OutputDealer(dealers.Answer));
     }
 
+    [HttpPost("change")]
+    public async Task<IActionResult> Change([FromQuery] DealerIdQuery q, [FromBody] CreateDealerBody b)
+    {
+        var dealers = await _dealerService.Change(q.Id, b.Name, b.Description, b.TypeId);
+        if (!dealers.Ok || dealers.Answer is null) return BadRequest(dealers.Errors);
+
+        return Ok(new OutputDealer(dealers.Answer));
+    }
+
     [HttpDelete("remove")]
     public async Task<IActionResult> Remove([FromQuery] DealerIdQuery q)
     {
